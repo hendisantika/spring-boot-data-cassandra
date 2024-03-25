@@ -22,3 +22,5 @@ services:
       CASSANDRA_RACK: West
       CASSANDRA_ENDPOINT_SNITCH: GossipingPropertyFileSnitch
       CASSANDRA_NUM_TOKENS: 128
+networks:
+  cassandra:
