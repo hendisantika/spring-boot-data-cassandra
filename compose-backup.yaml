@@ -15,6 +15,8 @@ services:
     volumes:
       - ./data/cass1:/var/lib/cassandra    # This is the volume that will persist data for cass1 node
       - ./etc/cass1:/etc/cassandra   # Use your own config files for full control
+      - ./cassandra-dc-1:/usr/local/bin/
+      - ./cassandra.yaml:/etc/cassandra/cassandra.yaml
     environment: &environment    # Declare and save environments variables into "environment"
       CASSANDRA_SEEDS: "cass1,cass2"    # The first two nodes will be seeds
       CASSANDRA_CLUSTER_NAME: SolarSystem
