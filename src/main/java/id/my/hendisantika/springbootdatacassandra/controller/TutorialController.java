@@ -2,6 +2,11 @@ package id.my.hendisantika.springbootdatacassandra.controller;
 
 import id.my.hendisantika.springbootdatacassandra.model.Tutorial;
 import id.my.hendisantika.springbootdatacassandra.repository.TutorialRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,11 +40,29 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
+@Tag(name = "Tutorial", description = "Endpoint for managing Tutorial")
 public class TutorialController {
 
     private final TutorialRepository tutorialRepository;
 
     @GetMapping("/tutorials")
+    @Operation(
+            summary = "Get All Tutorials Data",
+            description = "Get All Tutorials Data.",
+            tags = {"Tutorial"})
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    description = "Success",
+                    responseCode = "200",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation =
+                            Tutorial.class))
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(description = "Not found", responseCode = "404",
+                    content = @Content),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(description = "Internal error", responseCode = "500"
+                    , content = @Content)
+    }
+    )
     public ResponseEntity<List<Tutorial>> getAllTutorials(@RequestParam(required = false) String title) {
         try {
             List<Tutorial> tutorials = new ArrayList<>();
@@ -62,6 +85,23 @@ public class TutorialController {
     }
 
     @GetMapping("/tutorials/{id}")
+    @Operation(
+            summary = "Get Tutorial Data",
+            description = "Get Tutorial Data.",
+            tags = {"Tutorial"})
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    description = "Success",
+                    responseCode = "200",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation =
+                            Tutorial.class))
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(description = "Not found", responseCode = "404",
+                    content = @Content),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(description = "Internal error", responseCode = "500"
+                    , content = @Content)
+    }
+    )
     public ResponseEntity<Tutorial> getTutorialById(@PathVariable("id") UUID id) {
         Optional<Tutorial> tutorialData = tutorialRepository.findById(id);
 
@@ -70,6 +110,23 @@ public class TutorialController {
     }
 
     @PostMapping("/tutorials")
+    @Operation(
+            summary = "Add New Tutorial Data",
+            description = "Add New Tutorial Data.",
+            tags = {"Tutorial"})
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    description = "Success",
+                    responseCode = "200",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation =
+                            Tutorial.class))
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(description = "Not found", responseCode = "404",
+                    content = @Content),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(description = "Internal error", responseCode = "500"
+                    , content = @Content)
+    }
+    )
     public ResponseEntity<Tutorial> createTutorial(@RequestBody Tutorial tutorial) {
         try {
 //            Tutorial _tutorial = tutorialRepository.save(new Tutorial(UUIDs.timeBased(), tutorial.getTitle(), tutorial.getDescription(), false));
@@ -81,6 +138,23 @@ public class TutorialController {
     }
 
     @PutMapping("/tutorials/{id}")
+    @Operation(
+            summary = "Update Tutorial Data",
+            description = "Update Tutorial Data.",
+            tags = {"Tutorial"})
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    description = "Success",
+                    responseCode = "200",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation =
+                            Tutorial.class))
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(description = "Not found", responseCode = "404",
+                    content = @Content),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(description = "Internal error", responseCode = "500"
+                    , content = @Content)
+    }
+    )
     public ResponseEntity<Tutorial> updateTutorial(@PathVariable("id") UUID id, @RequestBody Tutorial tutorial) {
         Optional<Tutorial> tutorialData = tutorialRepository.findById(id);
 
@@ -96,6 +170,23 @@ public class TutorialController {
     }
 
     @DeleteMapping("/tutorials/{id}")
+    @Operation(
+            summary = "Delete a Tutorial Data",
+            description = "Delete a Tutorial Data.",
+            tags = {"Tutorial"})
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    description = "Success",
+                    responseCode = "200",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation =
+                            Tutorial.class))
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(description = "Not found", responseCode = "404",
+                    content = @Content),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(description = "Internal error", responseCode = "500"
+                    , content = @Content)
+    }
+    )
     public ResponseEntity<HttpStatus> deleteTutorial(@PathVariable("id") UUID id) {
         try {
             tutorialRepository.deleteById(id);
@@ -106,6 +197,23 @@ public class TutorialController {
     }
 
     @DeleteMapping("/tutorials")
+    @Operation(
+            summary = "Delete all Tutorials Data",
+            description = "Delete all Tutorials Data.",
+            tags = {"Tutorial"})
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    description = "Success",
+                    responseCode = "200",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation =
+                            Tutorial.class))
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(description = "Not found", responseCode = "404",
+                    content = @Content),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(description = "Internal error", responseCode = "500"
+                    , content = @Content)
+    }
+    )
     public ResponseEntity<HttpStatus> deleteAllTutorials() {
         try {
             tutorialRepository.deleteAll();
@@ -116,6 +224,23 @@ public class TutorialController {
     }
 
     @GetMapping("/tutorials/published")
+    @Operation(
+            summary = "Find Tutorials Data by Published",
+            description = "Find Tutorials Data by Published.",
+            tags = {"Tutorial"})
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    description = "Success",
+                    responseCode = "200",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation =
+                            Tutorial.class))
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(description = "Not found", responseCode = "404",
+                    content = @Content),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(description = "Internal error", responseCode = "500"
+                    , content = @Content)
+    }
+    )
     public ResponseEntity<List<Tutorial>> findByPublished() {
         try {
             List<Tutorial> tutorials = tutorialRepository.findByPublished(true);
